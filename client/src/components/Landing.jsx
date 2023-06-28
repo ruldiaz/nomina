@@ -12,7 +12,7 @@ const Landing = () => {
     const date = dateRef.current.value;
     const salary = salaryRef.current.value;
     const days = daysRef.current.value;
-
+  
     const content = `
       <h1>Employee Details</h1>
       <p><strong>Name:</strong> ${name}</p>
@@ -20,14 +20,18 @@ const Landing = () => {
       <p><strong>Salary:</strong> ${salary}</p>
       <p><strong>Days:</strong> ${days}</p>
     `;
-
+  
     const element = document.createElement('div');
     element.innerHTML = content;
-
-    html2pdf()
-      .set({ html2canvas: { scale: 4 } })
-      .from(element)
-      .save('employee_details.pdf');
+  
+    const options = {
+      filename: 'employee_details.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 4 },
+      jsPDF: { unit: 'mm', format: [80, 297] },
+    };
+  
+    html2pdf().set(options).from(element).save();
   };
 
   return (
